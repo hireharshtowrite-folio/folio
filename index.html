@@ -1,178 +1,46 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>Still Writing — Portfolio</title>
-<meta name="theme-color" content="#0b0907" />
-<style>
-  :root{--cream:#ead8b7;--ink:#21180f;--gold:#b88742;--warm:#d5a15e}
-  *{box-sizing:border-box}html{background:#080706;scroll-behavior:auto}body{margin:0;color:#eee;background:#080706;font-family:Georgia,'Times New Roman',serif;overflow-x:hidden}
-  #scene{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:0}
-  .scroll-space{height:640vh;position:relative;z-index:1;pointer-events:none}
-  .chrome{position:fixed;inset:0;z-index:3;pointer-events:none}
-  .topline{position:absolute;left:24px;top:22px;font:600 10px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,245,227,.68)}
-  .topline b{color:#d7a25d;font-weight:700}
-  .progress{position:absolute;right:23px;top:22px;font:500 10px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:rgba(255,245,227,.56);letter-spacing:.08em}
-  .hint{position:absolute;right:23px;bottom:24px;font:500 9px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,245,227,.55);text-align:right;transition:opacity .5s}
-  .hint:after{content:"";display:block;width:1px;height:42px;margin:10px 2px 0 auto;background:linear-gradient(rgba(255,255,255,.55),transparent)}
-  .edit{position:absolute;left:22px;bottom:22px;pointer-events:auto;text-decoration:none;color:rgba(255,245,227,.6);font:500 9px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid rgba(255,245,227,.25);padding-bottom:4px}
-  .film{position:absolute;left:50%;top:42%;transform:translate(-50%,0);pointer-events:auto;display:none;text-decoration:none;color:#24170f;font:700 10px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.11em;text-transform:uppercase;padding:8px 11px;border:1px solid rgba(38,23,13,.62);background:rgba(232,215,180,.18);backdrop-filter:blur(2px);mix-blend-mode:multiply;transition:opacity .2s,transform .2s}
-  .film:hover{transform:translate(-50%,-2px)}
-  .noise{position:fixed;inset:-40%;z-index:2;pointer-events:none;opacity:.045;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:noise .22s steps(2) infinite}
-  @keyframes noise{0%{transform:translate(0,0)}25%{transform:translate(2%,-1%)}50%{transform:translate(-1%,2%)}75%{transform:translate(1%,1%)}100%{transform:translate(-2%,-1%)}}
-  .loading{position:fixed;inset:0;z-index:9;background:#080706;display:grid;place-items:center;transition:opacity .8s;pointer-events:none}.loading span{font:500 10px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.2em;text-transform:uppercase;color:#c8a571}
-  @media(max-width:700px){.topline{left:15px;top:15px}.progress{right:15px;top:15px}.hint{right:15px;bottom:16px}.edit{left:15px;bottom:16px}.film{top:39%;font-size:9px}}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b0907" />
+  <meta property="og:title" content="Portfolio — The Story Machine" />
+  <meta property="og:description" content="A cinematic, scroll-driven 3D portfolio built around a living typewriter." />
+  <meta property="og:image" content="assets/concept-reference.png" />
+  <title>Portfolio — The Story Machine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-<canvas id="scene" aria-label="Interactive typewriter portfolio"></canvas>
-<div class="scroll-space" id="scrollSpace"></div>
-<div class="noise"></div>
-<div class="chrome">
-  <div class="topline"><b>●</b> STILL WRITING / PORTFOLIO</div>
-  <div class="progress" id="progress">01 / 04</div>
-  <div class="hint" id="hint">Scroll to feed paper</div>
-  <a class="edit" href="admin.html">Edit portfolio</a>
-  <a class="film" id="film" target="_blank" rel="noopener">Play film ↗</a>
-</div>
-<div class="loading" id="loading"><span>Loading the machine…</span></div>
-<script src="portfolio-data.js"></script>
-<script type="module">
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js';
+  <div id="loader"><div class="loader-inner">WAKING THE MACHINE<span class="dots">...</span></div></div>
+  <canvas id="scene"></canvas>
 
-const defaults = window.PORTFOLIO_DEFAULTS || [];
-let projects;
-try { projects = JSON.parse(localStorage.getItem('twPortfolioV2')) || defaults; } catch { projects = defaults; }
-if(!projects.length) projects = defaults;
+  <header class="topbar">
+    <div class="brand">THE STORY MACHINE</div>
+    <a href="admin.html" class="admin-link" aria-label="Open portfolio editor">EDIT</a>
+  </header>
 
-const canvas = document.getElementById('scene');
-const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:false, powerPreference:'high-performance'});
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-renderer.outputColorSpace = THREE.SRGBColorSpace;
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.03;
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  <div class="hud">
+    <div id="project-count">01 / 04</div>
+    <div class="scroll-copy">SCROLL TO FEED THE PAPER</div>
+  </div>
 
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x080706);
-scene.fog = new THREE.FogExp2(0x090705, .055);
-const camera = new THREE.PerspectiveCamera(34, innerWidth/innerHeight, .1, 60);
-camera.position.set(0, 1.7, 10.2);
+  <button id="playButton" class="play-button" hidden>PLAY FILM ↗</button>
 
-// Room / desk
-const floor = new THREE.Mesh(new THREE.PlaneGeometry(30,20), new THREE.MeshStandardMaterial({color:0x2c170d, roughness:.86, metalness:0}));
-floor.rotation.x=-Math.PI/2; floor.position.y=-2.85; floor.position.z=0; floor.receiveShadow=true; scene.add(floor);
-const back = new THREE.Mesh(new THREE.PlaneGeometry(30,18), new THREE.MeshStandardMaterial({color:0x120d09,roughness:1}));
-back.position.set(0,2,-7); scene.add(back);
+  <div id="storySpacer" aria-hidden="true"></div>
 
-scene.add(new THREE.HemisphereLight(0x5d4a39,0x090705,.8));
-const key = new THREE.SpotLight(0xffc779, 90, 22, Math.PI/4.4, .8, 1.3); key.position.set(-4.2,5.8,6); key.target.position.set(.1,.2,0); key.castShadow=true; key.shadow.mapSize.set(1024,1024); scene.add(key,key.target);
-const rim = new THREE.PointLight(0x8c5a2c,20,10,2); rim.position.set(4,1.7,2); scene.add(rim);
-const paperLight = new THREE.PointLight(0xffe4b0,18,8,2); paperLight.position.set(-.6,3,3.4); scene.add(paperLight);
+  <section class="endcard" id="endcard">
+    <div class="endcard-inner">
+      <div class="eyebrow">END OF THE ROLL</div>
+      <h1>Still writing.</h1>
+      <p>For films, campaigns, brand work and strange ideas worth making.</p>
+      <a id="contactLink" href="mailto:hello@example.com">hello@example.com ↗</a>
+    </div>
+  </section>
 
-// floating dust
-const dustGeom=new THREE.BufferGeometry(); const count=420; const pos=new Float32Array(count*3);
-for(let i=0;i<count;i++){pos[i*3]=(Math.random()-.5)*14;pos[i*3+1]=Math.random()*8-2.4;pos[i*3+2]=Math.random()*11-4}
-dustGeom.setAttribute('position',new THREE.BufferAttribute(pos,3));
-const dust=new THREE.Points(dustGeom,new THREE.PointsMaterial({color:0xd9b989,size:.014,transparent:true,opacity:.24,depthWrite:false})); scene.add(dust);
-
-const loader = new THREE.TextureLoader();
-const typeTex = await loader.loadAsync('assets/typewriter.png'); typeTex.colorSpace=THREE.SRGBColorSpace;
-const ratio=typeTex.image.width/typeTex.image.height;
-const tw = new THREE.Mesh(new THREE.PlaneGeometry(7.2*ratio,7.2), new THREE.MeshBasicMaterial({map:typeTex,transparent:true,depthWrite:true,alphaTest:.02}));
-tw.position.set(0,-.65,1.15); tw.scale.set(.94,.94,.94); scene.add(tw);
-
-// shadow beneath typewriter
-const shadowCanvas=document.createElement('canvas');shadowCanvas.width=512;shadowCanvas.height=256;const sx=shadowCanvas.getContext('2d');
-const gr=sx.createRadialGradient(256,110,20,256,110,240);gr.addColorStop(0,'rgba(0,0,0,.72)');gr.addColorStop(1,'rgba(0,0,0,0)');sx.fillStyle=gr;sx.fillRect(0,0,512,256);
-const shadowTex=new THREE.CanvasTexture(shadowCanvas); const shadow=new THREE.Mesh(new THREE.PlaneGeometry(8,4),new THREE.MeshBasicMaterial({map:shadowTex,transparent:true,depthWrite:false}));shadow.rotation.x=-Math.PI/2;shadow.position.set(0,-2.78,.3);scene.add(shadow);
-
-// Paper texture canvas — everything is rendered into the sheet, not HTML.
-const texCanvas=document.createElement('canvas'); texCanvas.width=1100; texCanvas.height=1450; const ctx=texCanvas.getContext('2d');
-const paperTex=new THREE.CanvasTexture(texCanvas); paperTex.colorSpace=THREE.SRGBColorSpace; paperTex.anisotropy=renderer.capabilities.getMaxAnisotropy();
-const pGeom=new THREE.PlaneGeometry(4.85,6.4,36,54);
-const basePos=pGeom.attributes.position.array.slice();
-const pMat=new THREE.MeshStandardMaterial({map:paperTex,color:0xffffff,roughness:.9,metalness:0,side:THREE.DoubleSide});
-const paper=new THREE.Mesh(pGeom,pMat); paper.position.set(0,1.7,.0); paper.rotation.x=-.02; paper.castShadow=true; paper.receiveShadow=true; scene.add(paper);
-
-// A dark platen behind the bottom of the paper
-const platen=new THREE.Mesh(new THREE.CylinderGeometry(2.6,2.6,.23,64),new THREE.MeshStandardMaterial({color:0x15100c,roughness:.42,metalness:.3}));platen.rotation.z=Math.PI/2;platen.position.set(0,-.1,.19);platen.castShadow=true;scene.add(platen);
-
-function paperBase(){
-  const w=texCanvas.width,h=texCanvas.height;
-  const g=ctx.createLinearGradient(0,0,w,0); g.addColorStop(0,'#c9b28e'); g.addColorStop(.045,'#e1ceb0');g.addColorStop(.5,'#eadbbc');g.addColorStop(.955,'#ddc5a2');g.addColorStop(1,'#b99d79');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
-  // fibers / flecks
-  ctx.globalAlpha=.22;
-  for(let i=0;i<5200;i++){const x=Math.random()*w,y=Math.random()*h,a=Math.random()*.8+.1;ctx.fillStyle=Math.random()>.55?'#6f5a41':'#fff3d3';ctx.fillRect(x,y,Math.random()*1.5+.3,Math.random()*1.2+.2);ctx.globalAlpha=.015*a}
-  ctx.globalAlpha=1;
-  const edge=ctx.createLinearGradient(0,0,w,0);edge.addColorStop(0,'rgba(74,42,18,.18)');edge.addColorStop(.035,'rgba(74,42,18,0)');edge.addColorStop(.965,'rgba(74,42,18,0)');edge.addColorStop(1,'rgba(74,42,18,.17)');ctx.fillStyle=edge;ctx.fillRect(0,0,w,h);
-}
-function wrapText(text,x,y,maxWidth,lineHeight,maxLines=5){
-  const words=(text||'').split(/\s+/);let line='',lines=[];
-  for(const word of words){const test=line?line+' '+word:word;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=word;if(lines.length>=maxLines-1)break}else line=test}if(line&&lines.length<maxLines)lines.push(line);
-  lines.forEach((l,i)=>ctx.fillText(l,x,y+i*lineHeight));return y+lines.length*lineHeight;
-}
-let renderToken=0;
-async function drawProject(p, typing=1){
-  const token=++renderToken; paperBase();
-  ctx.save();ctx.fillStyle='#23170f';ctx.textBaseline='alphabetic';
-  ctx.font='28px ui-monospace, SFMono-Regular, Menlo, monospace';ctx.globalAlpha=.72;ctx.fillText((p.eyebrow||'').toUpperCase(),104,150);ctx.globalAlpha=1;
-  ctx.strokeStyle='rgba(55,34,19,.35)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(104,182);ctx.lineTo(996,182);ctx.stroke();
-  const title=(p.title||''); const n=Math.floor(title.length*Math.min(1,typing*1.38));
-  ctx.font='700 70px Georgia, serif';ctx.fillStyle='#1d130d';let yy=310;yy=wrapText(title.slice(0,n),104,yy,870,79,3)+25;
-  ctx.font='29px Georgia, serif';ctx.fillStyle='rgba(37,25,16,.84)';
-  yy=wrapText(p.desc||'',104,yy,870,42,5)+28;
-  ctx.font='21px ui-monospace, SFMono-Regular, Menlo, monospace';ctx.fillStyle='rgba(51,35,23,.66)';ctx.fillText((p.meta||'').toUpperCase(),104,yy);
-  ctx.restore();paperTex.needsUpdate=true;
-  if(p.images?.length && typing>.52){
-    const img=new Image();img.onload=()=>{if(token!==renderToken)return;const maxW=820,maxH=520;let iw=img.naturalWidth,ih=img.naturalHeight;const sc=Math.min(maxW/iw,maxH/ih);iw*=sc;ih*=sc;const x=(texCanvas.width-iw)/2;const y=Math.min(1210,yy+58);ctx.save();ctx.shadowColor='rgba(51,32,18,.24)';ctx.shadowBlur=18;ctx.fillStyle='#d8c5a6';ctx.fillRect(x-12,y-12,iw+24,ih+24);ctx.drawImage(img,x,y,iw,ih);ctx.globalAlpha=.12;ctx.fillStyle='#70401d';ctx.fillRect(x,y,iw,ih);ctx.restore();paperTex.needsUpdate=true};img.src=p.images[0];
-  }
-}
-
-const film=document.getElementById('film'),progressEl=document.getElementById('progress'),hint=document.getElementById('hint'),scrollSpace=document.getElementById('scrollSpace');
-scrollSpace.style.height=`${Math.max(420,projects.length*165)}vh`;
-let active=-1, lastType=-1;
-function setProject(i){active=i;lastType=-1;const p=projects[i];progressEl.textContent=`${String(i+1).padStart(2,'0')} / ${String(projects.length).padStart(2,'0')}`;if(p.link){film.href=p.link;film.style.display='block'}else film.style.display='none';drawProject(p,0)}
-setProject(0);
-
-function deformPaper(local, transition){
-  const arr=pGeom.attributes.position.array;
-  for(let i=0;i<arr.length;i+=3){const x=basePos[i], y=basePos[i+1];const yn=(y+3.2)/6.4;let z=0;
-    // small organic waviness
-    z += Math.sin(x*5.3+y*2.1)*.010 + Math.sin(y*7.2)*.006;
-    // lower edge bends toward roller
-    if(yn<.24){const t=(.24-yn)/.24;z-=t*t*.32;}
-    // when leaving, top curls backward like real paper
-    if(transition>0){const edge=Math.max(0,(yn-(.58-transition*.25))/.42);z-=edge*edge*transition*2.15;arr[i+1]=y + transition*2.25;}
-    else arr[i+1]=y;
-    arr[i]=x;arr[i+2]=z;
-  }
-  pGeom.attributes.position.needsUpdate=true;pGeom.computeVertexNormals();
-}
-function ease(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2}
-function animate(){
-  const max=document.documentElement.scrollHeight-innerHeight;const s=max?scrollY/max:0;const exact=s*projects.length;const idx=Math.min(projects.length-1,Math.floor(exact));const local=Math.min(1,exact-idx);
-  if(idx!==active)setProject(idx);
-  const type=Math.min(1,Math.max(0,(local-.06)/.38));
-  const step=Math.floor(type*28); if(step!==lastType){lastType=step;drawProject(projects[idx],type)}
-  const out=Math.max(0,(local-.76)/.24);deformPaper(local,ease(out));
-  paper.position.y=1.72 + out*1.75; paper.rotation.x=-.02-out*.18; paper.rotation.z=Math.sin(s*7)*.004;
-  // subtle cinematic camera travel, like a guided 3D experience
-  camera.position.z=10.15 - Math.min(.85,s*.9); camera.position.x=Math.sin(s*Math.PI*2.2)*.13; camera.position.y=1.7+Math.sin(s*Math.PI*1.4)*.08; camera.lookAt(0,.35,.1);
-  tw.rotation.z=Math.sin(s*5.4)*.003;tw.position.x=Math.sin(s*3.4)*.025;
-  dust.rotation.y+=.00035; dust.position.y=Math.sin(performance.now()*.00018)*.06;
-  film.style.opacity=String(Math.max(0,Math.min(1,(type-.6)*3))*(1-out));
-  hint.style.opacity=scrollY>innerHeight*.6?'.25':'1';
-  renderer.render(scene,camera);requestAnimationFrame(animate)
-}
-function resize(){renderer.setSize(innerWidth,innerHeight,false);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
-  const mobile=innerWidth<700; tw.scale.setScalar(mobile?.76:.94);tw.position.y=mobile?-.9:-.65;paper.scale.setScalar(mobile?.79:1);paper.position.x=mobile?0:.0;
-}
-addEventListener('resize',resize);resize();
-document.getElementById('loading').style.opacity='0';setTimeout(()=>document.getElementById('loading').remove(),900);animate();
-addEventListener('storage',()=>location.reload());
-</script>
+  <script src="portfolio-data.js"></script>
+  <script type="module" src="app.js"></script>
 </body>
 </html>

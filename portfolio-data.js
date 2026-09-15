@@ -1,34 +1,43 @@
-window.PORTFOLIO_DEFAULTS = [
-  {
-    "eyebrow": "Written by",
-    "title": "Your Name",
-    "desc": "Writer. Creative. Brand builder. Scroll to keep the machine moving.",
-    "meta": "Selected work · 2026",
-    "link": "",
-    "images": []
-  },
-  {
-    "eyebrow": "Campaign 01",
-    "title": "Thoda Aur",
-    "desc": "A brand idea built around a very Indian instinct: wanting just a little more.",
-    "meta": "Brand campaign · 2026",
-    "link": "https://drive.google.com/",
-    "images": []
-  },
-  {
-    "eyebrow": "Film 01",
-    "title": "The work moves first.",
-    "desc": "Replace this project with a film, campaign, social idea, or piece of writing you want people to remember.",
-    "meta": "Film / Copy / Creative",
-    "link": "",
-    "images": []
-  },
-  {
-    "eyebrow": "End of sheet",
-    "title": "Still writing.",
-    "desc": "For work, collaborations, or an unnecessarily long conversation about one very small idea.",
-    "meta": "your@email.com",
-    "link": "",
-    "images": []
-  }
-];
+window.PORTFOLIO_DATA = {
+  owner: "Your Name",
+  subtitle: "Writer / Creative / Brand",
+  contact: "hello@example.com",
+  projects: [
+    {
+      title: "Thoda Aur",
+      client: "Mudrex",
+      category: "Brand Campaign",
+      year: "2026",
+      description: "A campaign about the very Indian instinct to ask for just a little more.",
+      image: "",
+      playUrl: "https://drive.google.com/"
+    },
+    {
+      title: "Trade The World",
+      client: "Mudrex",
+      category: "Brand Platform",
+      year: "2026",
+      description: "A multi-asset positioning idea connecting India to global markets.",
+      image: "",
+      playUrl: "https://drive.google.com/"
+    },
+    {
+      title: "Squad Wars",
+      client: "Mudrex",
+      category: "Growth Campaign",
+      year: "2026",
+      description: "Referral-led acquisition turned into a game of squads, milestones and competition.",
+      image: "",
+      playUrl: "https://drive.google.com/"
+    },
+    {
+      title: "Selected Work",
+      client: "Archive",
+      category: "Films / Social / Experiments",
+      year: "2024—2026",
+      description: "A rotating selection of the work that did not fit neatly into one box.",
+      image: "",
+      playUrl: "https://drive.google.com/"
+    }
+  ]
+};

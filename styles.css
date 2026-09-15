@@ -1,0 +1,19 @@
+:root{
+  --ink:#120e0a; --paper:#e7d4ae; --gold:#ad7a33; --cream:#e8dcc3;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:#090705;color:#eee;font-family:Inter,system-ui,sans-serif;overflow-x:hidden}
+body{min-height:100vh}
+#scene{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:0;background:#080604}
+#loader{position:fixed;inset:0;display:grid;place-items:center;background:#080604;z-index:50;transition:opacity .8s ease,visibility .8s ease}
+#loader.hide{opacity:0;visibility:hidden}
+.loader-inner{font-family:"Special Elite",monospace;font-size:13px;letter-spacing:.18em;color:#d9c49c}
+.topbar{position:fixed;z-index:10;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:22px 26px;mix-blend-mode:screen;pointer-events:none}
+.brand,.admin-link{font-size:11px;letter-spacing:.18em;color:#d8ccb6;text-decoration:none}.admin-link{pointer-events:auto;opacity:.75}.admin-link:hover{opacity:1}
+.hud{position:fixed;z-index:10;left:26px;bottom:22px;display:flex;gap:18px;align-items:center;color:#cbb998;pointer-events:none}
+#project-count{font-family:"Special Elite",monospace;font-size:13px}.scroll-copy{font-size:9px;letter-spacing:.17em;opacity:.55}
+.play-button{position:fixed;z-index:12;right:28px;bottom:24px;border:1px solid rgba(236,216,177,.42);background:rgba(21,15,10,.55);backdrop-filter:blur(9px);color:#efe3c9;padding:12px 15px;border-radius:999px;font:600 10px/1 Inter;letter-spacing:.14em;cursor:pointer;transition:.25s ease}.play-button:hover{background:#efe3c9;color:#18110c}
+#storySpacer{height:520vh;position:relative;z-index:1;pointer-events:none}
+.endcard{min-height:100vh;position:relative;z-index:4;display:grid;place-items:center;padding:40px;background:linear-gradient(to bottom,rgba(7,5,4,0),rgba(7,5,4,.92) 28%,#070504 100%)}
+.endcard-inner{max-width:680px;text-align:center}.eyebrow{font-size:10px;letter-spacing:.23em;color:#b69b70}.endcard h1{font:400 clamp(64px,10vw,140px)/.85 "Special Elite",serif;margin:18px 0 26px;color:#e9dabc}.endcard p{max-width:550px;margin:0 auto 28px;color:#a99a84;line-height:1.6}.endcard a{color:#e9dabc;text-decoration:none;font-size:12px;letter-spacing:.12em;border-bottom:1px solid rgba(233,218,188,.35);padding-bottom:5px}
+@media(max-width:700px){.topbar{padding:18px}.hud{left:18px;bottom:18px}.scroll-copy{display:none}.play-button{right:18px;bottom:18px}.brand{max-width:60vw}.admin-link{font-size:10px}}

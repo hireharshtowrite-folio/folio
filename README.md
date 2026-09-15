@@ -1,37 +1,36 @@
-# Cinematic Typewriter Portfolio
+# The Story Machine — GitHub Pages Portfolio
 
-This is a no-build static website designed for GitHub Pages.
+A scroll-driven 3D portfolio built with Three.js. No build step is required.
+
+## Deploy to GitHub Pages
+
+1. Create a new **public** GitHub repository (for example `portfolio`).
+2. Upload every file/folder from this package into the repository root.
+3. Go to **Settings → Pages**.
+4. Under **Build and deployment**, choose **Deploy from a branch**.
+5. Choose **main** and **/(root)**, then Save.
+6. GitHub will publish the site at `https://YOUR-USERNAME.github.io/portfolio/`.
+
+## Add or update your work
+
+1. Open `https://YOUR-USERNAME.github.io/portfolio/admin.html`.
+2. Add projects and upload a creative image for each project.
+3. Add the Google Drive / YouTube / Vimeo URL in the film field.
+4. Click **Export portfolio-data.js**.
+5. In your GitHub repository, replace the existing `portfolio-data.js` with the exported file and commit.
+6. GitHub Pages will republish automatically.
+
+The editor resizes uploaded images before embedding them in the data file. This is intentionally simple for a GitHub-only workflow.
 
 ## Files
-- `index.html` — public cinematic portfolio
-- `admin.html` — local portfolio editor
-- `portfolio-data.js` — published project data
-- `assets/typewriter.png` — the supplied ornate typewriter, cut out for the scene
 
-## Edit your work
-1. Open `admin.html` through a local web server or after deploying to GitHub Pages.
-2. Add/reorder projects.
-3. Upload one or more creative images for each project.
-4. Add your Google Drive / YouTube / Vimeo link.
-5. Open the live preview.
+- `index.html` — public portfolio
+- `app.js` — real-time Three.js scene, animation and interaction
+- `styles.css` — UI styles
+- `portfolio-data.js` — all portfolio content
+- `admin.html` — no-code editor/exporter
+- `assets/concept-reference.png` — optional social preview/fallback image
 
-The editor stores edits in your browser so the preview updates immediately.
+## Important
 
-## Publish your edits
-1. In the editor click **Export portfolio-data.js**.
-2. Replace the existing `portfolio-data.js` in your GitHub repository with the downloaded file.
-3. Commit the change. GitHub Pages will redeploy automatically.
-
-This export includes the uploaded images as compressed data URLs, so you do not need to manually manage an assets folder for each new creative. For a very large portfolio, moving images to Cloudinary/Supabase later is recommended.
-
-## GitHub Pages
-Upload the contents of this folder to the repository root, then:
-Settings → Pages → Deploy from branch → `main` → `/ (root)`.
-
-## Local preview
-Because the site imports Three.js as an ES module, use a local HTTP server rather than opening `index.html` directly.
-
-Python example:
-`python3 -m http.server 8080`
-
-Then open `http://localhost:8080`.
+The live 3D typewriter is generated procedurally in Three.js. It is not a static image pasted into the page. The paper is a subdivided 3D mesh and is curved/deformed in real time as the user scrolls.
