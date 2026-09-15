@@ -1,26 +1,37 @@
-# Typewriter Portfolio
+# Cinematic Typewriter Portfolio
 
-A static, GitHub Pages-ready portfolio with a scroll-driven typewriter concept and a browser-based editor.
+This is a no-build static website designed for GitHub Pages.
 
-## Run locally
-Open `index.html` directly, or serve the folder with any static server.
+## Files
+- `index.html` — public cinematic portfolio
+- `admin.html` — local portfolio editor
+- `portfolio-data.js` — published project data
+- `assets/typewriter.png` — the supplied ornate typewriter, cut out for the scene
 
-## Edit projects
-Open `admin.html`.
+## Edit your work
+1. Open `admin.html` through a local web server or after deploying to GitHub Pages.
+2. Add/reorder projects.
+3. Upload one or more creative images for each project.
+4. Add your Google Drive / YouTube / Vimeo link.
+5. Open the live preview.
 
-You can:
-- add/reorder/delete projects
-- edit title, description, metadata and film links
-- upload multiple creative images per project
-- export/import portfolio JSON
+The editor stores edits in your browser so the preview updates immediately.
 
-Uploads are stored in browser localStorage as data URLs for preview. GitHub Pages is static, so browser uploads cannot write themselves back to the repository. For permanent publishing, commit optimized images and the exported data or connect the site later to a CMS/storage service.
+## Publish your edits
+1. In the editor click **Export portfolio-data.js**.
+2. Replace the existing `portfolio-data.js` in your GitHub repository with the downloaded file.
+3. Commit the change. GitHub Pages will redeploy automatically.
 
-## Deploy to GitHub Pages
-1. Create a GitHub repository.
-2. Upload these files to the repository root.
-3. In **Settings → Pages**, deploy from the main branch/root.
-4. GitHub will provide the public URL.
+This export includes the uploaded images as compressed data URLs, so you do not need to manually manage an assets folder for each new creative. For a very large portfolio, moving images to Cloudinary/Supabase later is recommended.
 
-## Recommended production upgrade
-For true "upload image and publish live" editing, connect the editor to a small backend such as Cloudinary/Supabase plus GitHub Actions, or use a Git-based CMS.
+## GitHub Pages
+Upload the contents of this folder to the repository root, then:
+Settings → Pages → Deploy from branch → `main` → `/ (root)`.
+
+## Local preview
+Because the site imports Three.js as an ES module, use a local HTTP server rather than opening `index.html` directly.
+
+Python example:
+`python3 -m http.server 8080`
+
+Then open `http://localhost:8080`.
