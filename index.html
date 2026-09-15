@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Portfolio — Still Writing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#161412;--paper:#efe4c8;--paper2:#e6d7b6;--accent:#e5b82c;--bg:#090909;--muted:#8c8578}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:#fff;font-family:Inter,system-ui,sans-serif;overflow-x:hidden}
+a{color:inherit}.stage{position:fixed;inset:0;perspective:1200px;overflow:hidden;background:radial-gradient(circle at 50% 20%,#222 0,#0a0a0a 47%,#050505 100%)}
+.vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle,transparent 40%,rgba(0,0,0,.62) 100%);z-index:20}.grain{position:absolute;inset:-100%;opacity:.055;z-index:19;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.65'/%3E%3C/svg%3E");animation:grain .25s steps(2) infinite}@keyframes grain{0%{transform:translate(0)}25%{transform:translate(3%,-2%)}50%{transform:translate(-2%,3%)}75%{transform:translate(2%,2%)}100%{transform:translate(-1%,-3%)}}
+.brand{position:absolute;left:28px;top:24px;z-index:30;font:600 13px/1 Inter;letter-spacing:.16em;text-transform:uppercase;color:#d8d3c7}.brand b{color:var(--accent)}
+.typewriter{position:absolute;left:50%;bottom:-3vh;width:min(900px,94vw);height:61vh;transform:translateX(-50%);z-index:8;filter:drop-shadow(0 35px 30px rgba(0,0,0,.68))}.machine{position:absolute;inset:auto 5% 0;height:45%;background:linear-gradient(145deg,#d8a91c,#f0c83f 52%,#b57d0c);border-radius:22px 22px 72px 72px;box-shadow:inset 0 7px 12px rgba(255,255,255,.22),inset 0 -12px 20px rgba(77,47,0,.36),0 22px 38px rgba(0,0,0,.5)}.machine:before{content:"";position:absolute;left:9%;right:9%;top:-38px;height:82px;border-radius:15px;background:linear-gradient(#312f2c,#0e0e0e);box-shadow:0 8px 15px #000}.machine:after{content:"";position:absolute;left:15%;right:15%;top:29%;height:28%;border-radius:10px;background:repeating-linear-gradient(90deg,#111 0 22px,#222 22px 29px);opacity:.94;box-shadow:inset 0 5px 10px #000}.keys{position:absolute;left:15%;right:15%;top:32%;height:21%;z-index:2;display:grid;grid-template-columns:repeat(12,1fr);gap:7px;transform:perspective(400px) rotateX(18deg)}.key{height:18px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#494744,#111 58%,#050505);box-shadow:0 2px 1px #000}.space{position:absolute;z-index:3;left:31%;right:31%;top:58%;height:13px;border-radius:8px;background:#25231f;box-shadow:0 5px 3px rgba(0,0,0,.5)}.badge{position:absolute;left:50%;bottom:10%;transform:translateX(-50%);z-index:4;padding:8px 14px;border:1px solid rgba(40,26,0,.45);border-radius:3px;font:700 11px/1 Inter;letter-spacing:.2em;color:#392704;background:rgba(255,229,104,.22)}
+.paper-wrap{position:absolute;left:50%;top:-31vh;width:min(610px,72vw);height:57vh;transform:translateX(-50%);z-index:5;transform-style:preserve-3d}.paper{position:absolute;inset:0;background:linear-gradient(90deg,var(--paper2),var(--paper) 7%,#f5ebd1 50%,var(--paper) 93%,var(--paper2));color:var(--ink);box-shadow:0 17px 32px rgba(0,0,0,.44);transform-origin:50% 100%;overflow:hidden;padding:42px 50px 100px;font-family:'DM Mono',monospace}.paper:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(94,63,20,.11),transparent 7%,transparent 91%,rgba(94,63,20,.12));mix-blend-mode:multiply}.paper-content{height:100%;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2}.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px;color:#665c4b}.title{font-size:clamp(27px,4vw,52px);line-height:1.02;letter-spacing:-.04em;font-weight:500;margin:0 0 18px}.desc{font-size:clamp(12px,1.5vw,16px);line-height:1.55;max-width:45ch;color:#3f3930}.meta{margin-top:20px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7f7565}.play{display:inline-flex;align-items:center;gap:10px;margin-top:25px;border:1px solid #2d2923;padding:10px 13px;text-decoration:none;font:500 11px/1 Inter;letter-spacing:.1em;text-transform:uppercase;width:max-content;background:rgba(255,255,255,.25)}.play:hover{background:var(--ink);color:var(--paper)}
+.gallery{position:absolute;right:7%;top:12%;width:31%;height:53%;z-index:4;transform:rotate(2deg);display:none}.gallery.active{display:block}.shot{position:absolute;width:100%;height:100%;object-fit:cover;border:7px solid #efe8d7;box-shadow:0 22px 45px rgba(0,0,0,.45);background:#222}.shot:nth-child(2){transform:translate(-16px,20px) rotate(-5deg)}.shot:nth-child(3){transform:translate(16px,30px) rotate(5deg)}
+.scrollhint{position:absolute;right:25px;bottom:25px;z-index:30;font:400 10px/1.4 Inter;letter-spacing:.14em;text-transform:uppercase;color:#aaa;text-align:right}.scrollhint span{display:block;width:1px;height:44px;background:#777;margin:10px 0 0 auto}
+.spacer{height:900vh}.admin-link{position:fixed;right:22px;top:20px;z-index:40;font-size:11px;color:#999;text-decoration:none;border:1px solid #353535;padding:8px 10px;border-radius:999px;background:rgba(0,0,0,.4);backdrop-filter:blur(8px)}
+@media(max-width:720px){.paper-wrap{width:84vw;height:54vh;top:-27vh}.paper{padding:32px 29px 90px}.typewriter{width:108vw;height:56vh;bottom:-2vh}.gallery{display:none!important}.scrollhint{font-size:9px}.brand{left:17px;top:18px}.admin-link{right:14px;top:14px}.title{font-size:33px}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="brand"><b>●</b> PORTFOLIO / STILL WRITING</div>
+  <a class="admin-link" href="admin.html">Edit portfolio</a>
+  <div class="gallery" id="gallery"></div>
+  <div class="typewriter">
+    <div class="paper-wrap" id="paperWrap"><article class="paper" id="paper"><div class="paper-content" id="paperContent"></div></article></div>
+    <div class="machine"><div class="keys" id="keys"></div><div class="space"></div><div class="badge">WORDS · FILMS · CAMPAIGNS</div></div>
+  </div>
+  <div class="scrollhint">Scroll to keep writing<span></span></div>
+  <div class="grain"></div><div class="vignette"></div>
+</div>
+<div class="spacer"></div>
+<script>
+const defaults=[
+ {type:'intro',eyebrow:'Written by',title:'Your Name',desc:'Ideas, films, campaigns and strange little things worth making.',meta:'Creative portfolio · 2026'},
+ {eyebrow:'Campaign 01',title:'Thoda Aur',desc:'A brand platform built around a simple Indian instinct: wanting just a little more.',meta:'Brand campaign · Mudrex · 2026',link:'#'},
+ {eyebrow:'Film 01',title:'The work should move before the viewer does.',desc:'A film-led project. Replace this with a one-line thought behind the work.',meta:'Film · Direction / Copy · 2026',link:'#'},
+ {eyebrow:'Social / Experiment',title:'Small idea. Big behaviour.',desc:'Use this section for social-first ideas, activations, experiments, or one-off pieces you love.',meta:'Social · 2026',link:'#'},
+ {type:'outro',eyebrow:'End of sheet',title:'Still writing.',desc:'For work, collaborations, or a good conversation.',meta:'your@email.com'}
+];
+function load(){try{return JSON.parse(localStorage.getItem('twPortfolio'))||defaults}catch(e){return defaults}}
+let projects=load();
+const keys=document.getElementById('keys');for(let i=0;i<36;i++){const k=document.createElement('i');k.className='key';keys.appendChild(k)}
+const content=document.getElementById('paperContent'),paperWrap=document.getElementById('paperWrap'),paper=document.getElementById('paper'),gallery=document.getElementById('gallery');
+let last=-1;
+function render(p){content.innerHTML=`<div class="eyebrow">${esc(p.eyebrow||'')}</div><h1 class="title"></h1><div class="desc">${esc(p.desc||'')}</div><div class="meta">${esc(p.meta||'')}</div>${p.link?`<a class="play" href="${escAttr(p.link)}" target="_blank" rel="noopener">Play film ↗</a>`:''}`; typeText(content.querySelector('.title'),p.title||'');
+ gallery.innerHTML=''; if(p.images&&p.images.length){p.images.slice(0,3).forEach(src=>{const im=new Image();im.className='shot';im.src=src;gallery.appendChild(im)});gallery.classList.add('active')} else gallery.classList.remove('active');}
+function typeText(el,text){el.textContent='';let i=0;const timer=setInterval(()=>{el.textContent=text.slice(0,++i);const ks=document.querySelectorAll('.key');if(ks.length){const k=ks[Math.floor(Math.random()*ks.length)];k.style.transform='translateY(2px)';setTimeout(()=>k.style.transform='',55)}if(i>=text.length)clearInterval(timer)},Math.max(18,Math.min(50,420/(text.length||1))))}
+function esc(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}function escAttr(s){return String(s).replace(/"/g,'&quot;')}
+function update(){const max=document.documentElement.scrollHeight-innerHeight;const y=max?scrollY/max:0;const n=projects.length;const exact=y*(n-1);const idx=Math.min(n-1,Math.floor(exact+.18));const local=exact-Math.floor(exact);
+ if(idx!==last){last=idx;render(projects[idx])}
+ const curl=Math.sin(Math.min(1,local)*Math.PI); const lift=-local*34; const rx=-curl*11; const rz=(local-.5)*.8;
+ paperWrap.style.transform=`translateX(-50%) translateY(${lift}px) rotateX(${rx}deg) rotateZ(${rz}deg)`;
+ paper.style.borderRadius=`0 0 ${curl*22}px ${curl*22}px`; paper.style.boxShadow=`0 ${17+curl*18}px ${32+curl*30}px rgba(0,0,0,${.44+curl*.18})`;
+ gallery.style.transform=`translateY(${-local*18}px) rotate(${2-local*3}deg)`;
+ requestAnimationFrame(update)}
+render(projects[0]);update();
+window.addEventListener('storage',()=>{projects=load();last=-1});
+</script>
+</body></html>
